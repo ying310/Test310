@@ -112,7 +112,7 @@
     <script>
       const handleLoad = () => {
         const element = document.getElementById('root');
-        DMSChatBot.renderBot('neapoc', element);
+        DMSChatBot.renderBot(localStorage.getItem('robotToken') || 'neapoc', element);
       };
     </script>
     <script src="https://exstagedms.deltaww.com/js/dmsChatbot.js" onload="handleLoad()" defer></script>
