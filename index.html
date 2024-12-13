@@ -1,17 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DMS ChatBot Example</title>
-    </head>
-	<body>
-		<div>外部網頁測試</div>
-		<script>
-			const initializeChatBot = () => {
-				if (DMSChatBot) DMSChatBot.renderBot('dmstext');
-			};
-		</script>
-		<script src="https://exstagedms.deltaww.com/js/dmsChatbot.js" onload="initializeChatBot()" defer></script>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外部網頁測試</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .bubble {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 182, 193, 0.8);
+            border-radius: 50%;
+            animation: float 10s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(calc(100vw - 50px));
+                opacity: 0;
+            }
+        }
+
+        .title {
+            position: absolute;
+            z-index: 10;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff69b4;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="title">外部網頁測試</div>
+
+    <script>
+        const body = document.body;
+
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            const size = Math.random() * 50 + 10;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+
+            const left = Math.random() * window.innerWidth;
+            bubble.style.left = `${left}px`;
+
+            const color = `hsl(${Math.random() * 360}, 70%, 80%)`;
+            bubble.style.backgroundColor = color;
+
+            const animationDuration = Math.random() * 5 + 5;
+            bubble.style.animationDuration = `${animationDuration}s`;
+
+            body.appendChild(bubble);
+
+            setTimeout(() => {
+                bubble.remove();
+            }, animationDuration * 1000);
+        }
+
+        setInterval(createBubble, 300);
+    </script>
+	<script>
+	 const initializeChatBot = () => {
+	 	 if (DMSChatBot) DMSChatBot.renderBot('dmstext');
+	 };
+	</script>
+	<script src="https://exstagedms.deltaww.com/js/dmsChatbot.js" onload="initializeChatBot()" defer></script>
+</body>
 </html>
