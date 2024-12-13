@@ -9,8 +9,7 @@
 		<div id="root"></div>
 		<script>
 			const initializeChatBot = () => {
-				const rootElement = document.getElementById('root');
-				if (rootElement && window.DMSChatBot) DMSChatBot.renderBot('dmstext', rootElement);
+				if (DMSChatBot) DMSChatBot.renderBot('dmstext');
 			};
 		</script>
 		<script src="https://exstagedms.deltaww.com/js/dmsChatbot.js" onload="initializeChatBot()" defer></script>
