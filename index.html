@@ -10,33 +10,29 @@
             overflow: hidden;
             font-family: Arial, sans-serif;
             background: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
             position: relative;
         }
 
-        .bubble {
+        .ball {
             position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 182, 193, 0.8);
             border-radius: 50%;
-            animation: float 10s infinite;
+            background-color: rgba(255, 182, 193, 0.8);
+            animation: bounce 5s infinite;
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-200px) translateX(200px);
             }
             50% {
-                opacity: 1;
+                transform: translateY(0) translateX(400px);
             }
-            100% {
-                transform: translateY(-100vh) translateX(calc(100vw - 50px));
-                opacity: 0;
+            75% {
+                transform: translateY(200px) translateX(200px);
             }
         }
 
@@ -47,6 +43,10 @@
             font-weight: bold;
             color: #ff69b4;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
         }
     </style>
 </head>
@@ -54,37 +54,31 @@
     <div class="title">外部網頁測試</div>
 
     <script>
-        const body = document.body;
+        function createBall() {
+            const ball = document.createElement('div');
+            ball.className = 'ball';
 
-        function createBubble() {
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
+            const size = Math.random() * 50 + 20;
+            ball.style.width = `${size}px`;
+            ball.style.height = `${size}px`;
 
-            const size = Math.random() * 50 + 10;
-            bubble.style.width = `${size}px`;
-            bubble.style.height = `${size}px`;
+            ball.style.left = `${Math.random() * (window.innerWidth - size)}px`;
+            ball.style.top = `${Math.random() * (window.innerHeight - size)}px`;
 
-            const left = Math.random() * window.innerWidth;
-            bubble.style.left = `${left}px`;
+            ball.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
 
-            const color = `hsl(${Math.random() * 360}, 70%, 80%)`;
-            bubble.style.backgroundColor = color;
+            ball.style.animationDuration = `${Math.random() * 3 + 2}s`;
 
-            const animationDuration = Math.random() * 5 + 5;
-            bubble.style.animationDuration = `${animationDuration}s`;
-
-            body.appendChild(bubble);
-
-            setTimeout(() => {
-                bubble.remove();
-            }, animationDuration * 1000);
+            document.body.appendChild(ball);
         }
 
-        setInterval(createBubble, 300);
+        for (let i = 0; i < 10; i++) {
+            createBall();
+        }
     </script>
 	<script>
 	 const initializeChatBot = () => {
-	 	 if (DMSChatBot) DMSChatBot.renderBot('dmstext');
+	  if (DMSChatBot) DMSChatBot.renderBot('dmstext');
 	 };
 	</script>
 	<script src="https://exstagedms.deltaww.com/js/dmsChatbot.js" onload="initializeChatBot()" defer></script>
