@@ -62,8 +62,36 @@
             balls.push({ element: ball, dx, dy, size });
         }
 
+        function checkCollision(ballA, ballB) {
+            const rectA = ballA.element.getBoundingClientRect();
+            const rectB = ballB.element.getBoundingClientRect();
+
+            const dx = rectA.left + ballA.size / 2 - (rectB.left + ballB.size / 2);
+            const dy = rectA.top + ballA.size / 2 - (rectB.top + ballB.size / 2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            return distance < (ballA.size / 2 + ballB.size / 2);
+        }
+
+        function handleCollision(ballA, ballB) {
+            const rectA = ballA.element.getBoundingClientRect();
+            const rectB = ballB.element.getBoundingClientRect();
+
+            const dx = rectA.left + ballA.size / 2 - (rectB.left + ballB.size / 2);
+            const dy = rectA.top + ballA.size / 2 - (rectB.top + ballB.size / 2);
+
+            const angle = Math.atan2(dy, dx);
+            const speedA = Math.sqrt(ballA.dx ** 2 + ballA.dy ** 2);
+            const speedB = Math.sqrt(ballB.dx ** 2 + ballB.dy ** 2);
+
+            ballA.dx = speedB * Math.cos(angle);
+            ballA.dy = speedB * Math.sin(angle);
+            ballB.dx = speedA * Math.cos(angle + Math.PI);
+            ballB.dy = speedA * Math.sin(angle + Math.PI);
+        }
+
         function moveBalls() {
-            balls.forEach(ball => {
+            balls.forEach((ball, index) => {
                 const rect = ball.element.getBoundingClientRect();
                 let x = rect.left + ball.dx;
                 let y = rect.top + ball.dy;
@@ -77,6 +105,13 @@
 
                 ball.element.style.left = `${x}px`;
                 ball.element.style.top = `${y}px`;
+
+                // Check for collisions with other balls
+                for (let j = index + 1; j < balls.length; j++) {
+                    if (checkCollision(ball, balls[j])) {
+                        handleCollision(ball, balls[j]);
+                    }
+                }
             });
 
             requestAnimationFrame(moveBalls);
@@ -94,5 +129,6 @@
 		 };
 	</script>
 	<script src="https://exstagedms.deltaww.com/js/dmsChatbot.js" onload="initializeChatBot()" defer></script>
+
 </body>
 </html>
